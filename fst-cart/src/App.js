@@ -2,7 +2,7 @@ import './App.css';
 
 function App() {
   return (
-  <h1>Wel Come to <b>FSTMART</b></h1>
+  <h1>WelCome to <b>FSTMART</b></h1>
   );
 }
 
