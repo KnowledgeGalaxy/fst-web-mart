@@ -1,0 +1,77 @@
+{
+  "products": [
+  
+    {
+      "name": "Cement",
+      "price": "450",
+      "category": "Construction Products",
+      "description": "it is a good quality products",
+      "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+      "id": 2
+    },
+    {
+      "name": "dadsf",
+      "price": "250",
+      "category": "cem",
+      "description": "dfad",
+      "imageUrl": "https://images.jdmagicbox.com/quickquotes/images_main/ramco-portland-pozzolana-cement-105332829-xp0l2.jpg",
+      "id": 3
+    },
+    {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 10
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 9
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 4
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 5
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 6
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 7
+      },
+      {
+        "name": "Cement",
+        "price": "450",
+        "category": "Construction Products",
+        "description": "it is a good quality products",
+        "imageUrl": "https://cdn.zeebiz.com/hindi/sites/default/files/2023/02/17/125623-cements.jpg?im=FitAndFill=(1200,900)",
+        "id": 8
+      }
+  ]
+}
