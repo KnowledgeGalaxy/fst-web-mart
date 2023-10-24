@@ -7,6 +7,7 @@ import AddProduct from './Component/AddProduct'
 import AllOrders from './Component/AllOrders';
 import ManageProduct from './Component/ManageProduct'
 import Header from './Component/Header';
+import Category from './Component/Category';
 const App = () => {
   return (
 
@@ -20,7 +21,7 @@ const App = () => {
         <Route path="/admin/add-product" element={<AddProduct/>}></Route>
         <Route path="/admin/manage-product" element={<ManageProduct/>}></Route>
         <Route path="/admin/all-orders" element={<AllOrders/>}></Route>
-        
+        <Route path="/admin/category" element={<Category/>}></Route>
       </Routes>
     </Router>
     </>
