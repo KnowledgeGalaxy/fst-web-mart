@@ -32,7 +32,6 @@ const Home = () => {
       <div className="search-bar">
         <input type="text" placeholder="Search" />
       </div>
-      <h1>Welcome to our online store!</h1>
       <div className="product-list">
         {products.map(product => (
           <div key={product.id} className="product-card">

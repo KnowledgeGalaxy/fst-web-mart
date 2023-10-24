@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #494bd4;
+    color: #fff;
+    margin: 5px;
+    padding: 10px 20px 20px 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .cart-icon {
+    font-size: 24px;
+  }
+  
+  @media (max-width: 600px) {
+    /* Apply styles for screens with a max width of 600px (typical mobile view) */
+    .header {
+      flex-direction: column;
+      text-align: flex;
+      padding: 10px;
+    }
+  
+    .title {
+      margin-bottom: 10px;
+    }
+  }
+  
