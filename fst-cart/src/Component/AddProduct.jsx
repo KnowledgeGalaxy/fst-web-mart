@@ -6,7 +6,7 @@ const AddProduct = () => {
   const [productInfo, setProductInfo] = useState({
     name: '',
     price: '',
-    category: 0, // Assuming 2 is the ID for the category
+    category: 1, // Assuming 2 is the ID for the category
     description: '',
     imageUrl: ''
   });
