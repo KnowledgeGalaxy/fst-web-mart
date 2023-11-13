@@ -26,7 +26,18 @@ const Home = () => {
       alert('Item added to cart'); // You can replace this with your desired notification method
     }
   };
-
+  const getRandomStars = () => {
+    const minStars = 3;
+    const maxStars = 5;
+    const numStars = Math.random() * (maxStars - minStars) + minStars; // Generate a random number with decimals
+    const roundedStars = Math.round(numStars); // Round to the nearest whole number
+  
+    const starsArray = Array.from({ length: roundedStars }, (_, index) => (
+      <span key={index} role="img" aria-label="star">⭐</span>
+    ));
+    return starsArray;
+  };
+  
   return (
     <div className="home">
       <div className="search-bar">
@@ -39,6 +50,9 @@ const Home = () => {
               <img src={product.imageUrl} alt={product.name} className='img' />
               <h3>{product.name}</h3>
               <p>Price: ₹{product.price}</p>
+              <div className="stars">
+                {getRandomStars()}
+              </div>
               <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
             </div>
           </div>
