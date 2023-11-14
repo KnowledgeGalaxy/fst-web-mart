@@ -1,0 +1,52 @@
+.admin-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-form {
+    margin: auto;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .admin-panel {
+    display: flex;
+    width: 100%;
+  }
+  
+  .side-nav {
+    width: 200px;
+    background: #f0f0f0;
+    padding: 1rem;
+  }
+  
+  .side-nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .side-nav li {
+    margin-bottom: 10px;
+  }
+  
+  .side-nav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .side-nav a:hover {
+    color: #007bff;
+  }
+  

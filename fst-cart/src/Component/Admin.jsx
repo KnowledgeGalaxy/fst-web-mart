@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {  Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
+import '../css/Admin.css';
 const Admin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [password, setPassword] = useState('');
@@ -20,9 +20,9 @@ const Admin = () => {
   };
 
   return (
-    <>
+    <div className="admin-container">
       {!isAdmin ? (
-        <div>
+        <div className="login-form">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="password">Password:</label>
@@ -39,9 +39,9 @@ const Admin = () => {
           </form>
         </div>
       ) : (
-        <div style={{ display: 'flex' }}>
-          <nav style={{ width: '200px', background: '#f0f0f0', padding: '1rem' }}>
-            <ul style={{ listStyleType: 'none', padding: '0' }}>
+        <div className="admin-panel">
+          <nav className="side-nav">
+            <ul>
               <li>
                 <Link to="/admin/add-product">Add Product</Link>
               </li>
@@ -58,7 +58,7 @@ const Admin = () => {
           </nav>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

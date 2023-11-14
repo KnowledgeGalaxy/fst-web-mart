@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/Category.css';
-
+import { Link } from 'react-router-dom';
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
@@ -55,6 +55,11 @@ const Category = () => {
 
   return (
     <div className="category-management-container">
+      <div>
+      <Link to="/admin">
+        <button type="button">Back</button>
+      </Link>
+    </div>
       <h1>Category Management</h1>
       <div className="input-group">
         <input
