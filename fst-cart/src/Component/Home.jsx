@@ -1,55 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/Home.css'
+import '../css/Home.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    axios.get('https://fst-cart-production.up.railway.app/api/products/') // Assuming json-server is running on port 5000
+    // Fetch products
+    axios.get('https://fst-cart-production.up.railway.app/api/products/')
       .then(response => {
         setProducts(response.data);
-        console.log(response)
+        console.log(response);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
+      });
+
+    // Fetch categories
+    axios.get('https://fst-cart-production.up.railway.app/api/categories/')
+      .then(response => {
+        setCategories(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error);
       });
   }, []);
 
   const handleAddToCart = (product) => {
     const existingCartItem = cart.find(item => item.id === product.id);
     if (existingCartItem) {
-      alert('Item is already added to cart'); // You can replace this with your desired notification method
+      alert('Item is already added to cart');
     } else {
       setCart([...cart, product]);
-      alert('Item added to cart'); // You can replace this with your desired notification method
+      alert('Item added to cart');
     }
   };
+
   const getRandomStars = () => {
     const minStars = 3;
     const maxStars = 5;
-    const numStars = Math.random() * (maxStars - minStars) + minStars; // Generate a random number with decimals
-    const roundedStars = Math.round(numStars); // Round to the nearest whole number
-  
+    const numStars = Math.random() * (maxStars - minStars) + minStars;
+    const roundedStars = Math.round(numStars);
+
     const starsArray = Array.from({ length: roundedStars }, (_, index) => (
       <span key={index} role="img" aria-label="star">⭐</span>
     ));
     return starsArray;
   };
-  
+
+  // Function to get category name by ID
+  const getCategoryNameById = (categoryId) => {
+    const category = categories.find(cat => cat.id === categoryId);
+    return category ? category.name : 'Unknown Category';
+  };
+
+  // Filter products based on search term and selected category
+  const filteredProducts = products.filter(product => (
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === '' || String(product.category) === selectedCategory)
+  ));
+
   return (
     <div className="home">
       <div className="search-bar">
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="">All Categories</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>{category.name}</option>
+          ))}
+        </select>
       </div>
       <div className="product-list">
-        {products.map(product => (
+        {filteredProducts.map(product => (
           <div key={product.id} className="product-card">
             <div className="card">
               <img src={product.imageUrl} alt={product.name} className='img' />
               <h3>{product.name}</h3>
               <p>Price: ₹{product.price}</p>
+              <p>Category: {getCategoryNameById(product.category)}</p>
               <div className="stars">
                 {getRandomStars()}
               </div>
