@@ -25,6 +25,7 @@ const ProductManager = () => {
   };
 
   const handleDelete = (productId) => {
+    alert("Are You Sure to delete it")
     // Add code to handle deleting a product
     const id = parseInt(productId);
     fetch(`https://fst-cart-production.up.railway.app/api/products/${id}/`, {
@@ -32,6 +33,7 @@ const ProductManager = () => {
     })
       .then(response => {
         if (response.ok) {
+          alert("successfully delete")
           setIsDeleted(true);
         }
       });
