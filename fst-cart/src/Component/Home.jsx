@@ -34,11 +34,12 @@ const Home = () => {
   }, []);
 
   const handleAddToCart = (product) => {
+    let quantity =1
     const existingCartItem = cart.find(item => item.id === product.id);
     if (existingCartItem) {
       alert('Item is already added to cart');
     } else {
-      dispatch(addToCart(product));
+      dispatch(addToCart({ ...product, quantity }));
       alert('Item added to cart');
     }
   };
