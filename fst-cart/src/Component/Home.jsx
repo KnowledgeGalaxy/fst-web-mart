@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../actions/cartActions';
 import axios from 'axios';
 import '../css/Home.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -35,7 +38,7 @@ const Home = () => {
     if (existingCartItem) {
       alert('Item is already added to cart');
     } else {
-      setCart([...cart, product]);
+      dispatch(addToCart(product));
       alert('Item added to cart');
     }
   };
