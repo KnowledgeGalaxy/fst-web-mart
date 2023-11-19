@@ -10,6 +10,7 @@ import AllOrders from './Component/AllOrders';
 import ManageProduct from './Component/ManageProduct'
 import Header from './Component/Header';
 import Category from './Component/Category';
+import Login from './Component/Login';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/admin/manage-product" element={<ManageProduct />} />
           <Route path="/admin/all-orders" element={<AllOrders />} />
           <Route path="/admin/category" element={<Category />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>

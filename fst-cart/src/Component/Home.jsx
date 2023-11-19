@@ -40,7 +40,6 @@ const Home = () => {
       alert('Item is already added to cart');
     } else {
       dispatch(addToCart({ ...product, quantity }));
-      alert('Item added to cart');
     }
   };
 

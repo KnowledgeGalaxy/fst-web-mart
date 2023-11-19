@@ -1,12 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCartItemQuantity, removeCartItem } from '../actions/cartActions';
+// import { placeOrder } from '../actions/orderActions';  // Import the action for placing an order
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import '../css/Cart.css';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart.cart);
+  const navigate = useNavigate();
+  console.log(cart);
   const dispatch = useDispatch();
 
   // Calculate total price
@@ -18,6 +22,12 @@ const Cart = () => {
 
   const handleRemoveItem = (productId) => {
     dispatch(removeCartItem(productId));
+  };
+
+  const handlePlaceOrder = () => {
+    navigate('/login');
+    // Dispatch an action to place the order (you need to implement this action)
+    // dispatch(placeOrder(cart));
   };
 
   return (
@@ -48,6 +58,9 @@ const Cart = () => {
       <div className="total-price-container">
         <p className="total-price">Total Price: ₹{totalPrice}</p>
       </div>
+      <button className="place-order-button" onClick={handlePlaceOrder}>
+        Place Order
+      </button>
     </div>
   );
 };
