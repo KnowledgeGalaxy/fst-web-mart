@@ -50,9 +50,10 @@ const Login = () => {
         body: JSON.stringify(signupData),
       });
 
-      if (response.ok) {
+      if (response.status===201) {
         const data = await response.json();
         dispatch(setSignupDataStore(data.customer));
+        setShowSignup(false)
         navigate('/login');
       } else {
         alert('Sign up failed. Please check your details.');
