@@ -52,8 +52,10 @@ const Login = () => {
 
       if (response.status===201) {
         const data = await response.json();
+        alert("Register Successfully please login");
         dispatch(setSignupDataStore(data.customer));
         setShowSignup(false)
+        
         navigate('/login');
       } else {
         alert('Sign up failed. Please check your details.');
