@@ -43,4 +43,97 @@
   button:hover {
     background-color: #45a049;
   }
+  .address-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+ 
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  select,
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-label input {
+    margin-right: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .address-container {
+      padding: 10px;
+    }
+  }
+  .address-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto; /* Add horizontal scroll for small screens */
+  }
+  
+  .address-table th, .address-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+  }
+  
+  .address-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .radio-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-label input {
+    margin-right: 5px;
+  }
+  
+  /* Responsive styles for small screens */
+  @media (max-width: 768px) {
+    .address-table {
+      font-size: 10px;
+    }
+  
+    .address-table th, .address-table td {
+      padding: 8px 5px;
+    }
+  }
   

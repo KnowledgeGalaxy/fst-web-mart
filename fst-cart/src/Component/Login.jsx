@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Login.css'; // Import the CSS file
 import { useDispatch} from 'react-redux';
+import { setLoggedIn } from '../actions/authAction';
 import { setLoginDataStore, setSignupDataStore } from '../actions/authAction.js';
 
 const Login = () => {
@@ -16,7 +17,7 @@ const Login = () => {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/login/', {
+      const response = await fetch('https://fst-cart-production.up.railway.app/api/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,8 +27,9 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
+        dispatch(setLoggedIn(true)); // Set the user as logged in
         dispatch(setLoginDataStore(data.customer_id));
-        navigate('/address');
+        navigate('/cart');
       } else {
         alert('Login failed. Please check your credentials.');
       }
@@ -40,7 +42,7 @@ const Login = () => {
   const handleSignupSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/customers/', {
+      const response = await fetch('https://fst-cart-production.up.railway.app/api/customers/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +73,7 @@ const Login = () => {
         // Sign Up Form
         <form onSubmit={handleSignupSubmit}>
 <label>
-            Customer ID:
+            Mobile Number:
             <input
               type="text"
               value={signupData.customer_id}
@@ -122,7 +124,7 @@ const Login = () => {
         // Login Form
         <form onSubmit={handleLoginSubmit}>
           <label>
-            Customer ID:
+          Mobile Number:
             <input
               type="text"
               value={loginData.customer_id}
