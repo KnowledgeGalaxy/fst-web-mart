@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
 import axios from 'axios';
+import Modal from 'react-modal';
 import '../css/Home.css';
 
 const Home = () => {
@@ -12,13 +13,13 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     // Fetch products
     axios.get('https://fst-cart-production.up.railway.app/api/products/')
       .then(response => {
         setProducts(response.data);
-        console.log(response);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
@@ -33,6 +34,19 @@ const Home = () => {
         console.error('Error fetching categories:', error);
       });
   }, []);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    openModal();
+  };
 
   const handleAddToCart = (product) => {
     let quantity = 1;
@@ -59,10 +73,6 @@ const Home = () => {
   const getCategoryNameById = (categoryId) => {
     const category = categories.find(cat => cat.id === categoryId);
     return category ? category.name : 'Unknown Category';
-  };
-
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
   };
 
   const filteredProducts = products.filter(product => (
@@ -105,13 +115,36 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {selectedProduct && (
-        <div className="product-description">
-          <h2>{selectedProduct.name}</h2>
-          <p>Description: {selectedProduct.description}</p>
-          {/* Add more details as needed */}
-        </div>
-      )}
+
+      {/* Product Modal */}
+      <Modal
+  isOpen={modalIsOpen}
+  onRequestClose={closeModal}
+  contentLabel="Product Modal"
+  className="modal"
+  overlayClassName="overlay"
+>
+  <div className="product-description">
+    <h2>{selectedProduct && selectedProduct.name}</h2>
+    <p>Description: {selectedProduct && selectedProduct.description}</p>
+    {/* Add more details, reviews, comments, and contact details as needed */}
+    <div className="reviews">
+      <h3>Reviews:</h3>
+      <p>Great product! ⭐⭐⭐⭐⭐</p>
+      <p>Awesome quality. ⭐⭐⭐⭐</p>
+    </div>
+    <div className="contact">
+      <h3>Contact:</h3>
+      <p>
+        <span role="img" aria-label="mail">📧</span> Email: {selectedProduct && 'fstmart@gmail.com'}
+      </p>
+      <p>
+        <span role="img" aria-label="whatsapp">📱</span> WhatsApp: {selectedProduct && '7810888468'}
+      </p>
+    </div>
+    <button onClick={closeModal}>Close</button>
+  </div>
+</Modal>
     </div>
   );
 };

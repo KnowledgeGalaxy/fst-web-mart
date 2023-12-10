@@ -1,0 +1,36 @@
+.all-orders-container {
+    padding: 20px;
+  }
+  
+  .orders-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .order-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33.33% - 20px); /* 3 cards per row with margin */
+    box-sizing: border-box;
+  }
+  
+  .order-details {
+    margin-bottom: 10px;
+  }
+  
+  .order-actions button {
+    margin-right: 5px;
+  }
+  
+  .order-actions {
+    margin-top: 10px;
+  }
+  
+  /* Mobile View */
+  @media screen and (max-width: 600px) {
+    .order-card {
+      width: 100%; /* Full width for mobile view */
+    }
+  }
+  
