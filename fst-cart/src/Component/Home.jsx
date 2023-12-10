@@ -6,6 +6,7 @@ import '../css/Home.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
@@ -34,7 +35,7 @@ const Home = () => {
   }, []);
 
   const handleAddToCart = (product) => {
-    let quantity =1
+    let quantity = 1;
     const existingCartItem = cart.find(item => item.id === product.id);
     if (existingCartItem) {
       alert('Item is already added to cart');
@@ -55,13 +56,15 @@ const Home = () => {
     return starsArray;
   };
 
-  // Function to get category name by ID
   const getCategoryNameById = (categoryId) => {
     const category = categories.find(cat => cat.id === categoryId);
     return category ? category.name : 'Unknown Category';
   };
 
-  // Filter products based on search term and selected category
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
   const filteredProducts = products.filter(product => (
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === '' || String(product.category) === selectedCategory)
@@ -88,7 +91,7 @@ const Home = () => {
       </div>
       <div className="product-list">
         {filteredProducts.map(product => (
-          <div key={product.id} className="product-card">
+          <div key={product.id} className="product-card" onClick={() => handleProductClick(product)}>
             <div className="card">
               <img src={product.imageUrl} alt={product.name} className='img' />
               <h3>{product.name}</h3>
@@ -102,6 +105,13 @@ const Home = () => {
           </div>
         ))}
       </div>
+      {selectedProduct && (
+        <div className="product-description">
+          <h2>{selectedProduct.name}</h2>
+          <p>Description: {selectedProduct.description}</p>
+          {/* Add more details as needed */}
+        </div>
+      )}
     </div>
   );
 };
