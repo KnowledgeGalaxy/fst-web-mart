@@ -34,3 +34,30 @@
     }
   }
   
+
+  /* Custom CSS for Modal Styling */
+.modal-content {
+  background-color: #f8f9fa; /* Set your desired background color */
+  color: #212529; /* Set text color */
+}
+
+.modal-header {
+  background-color: #007bff; /* Set header background color */
+  color: #fff; /* Set header text color */
+}
+
+.modal-footer {
+  background-color: #f8f9fa; /* Set footer background color */
+}
+
+/* Change the color of the close button */
+.modal-header button.close {
+  color: #fff;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 576px) {
+  .modal {
+    margin: 0;
+  }
+}

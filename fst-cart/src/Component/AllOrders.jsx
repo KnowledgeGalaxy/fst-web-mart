@@ -1,11 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Modal, Button, Spinner } from 'react-bootstrap';
+import { Trash } from 'react-bootstrap-icons';
 import '../css/AllOrders.css'; // Import your CSS file
+
+const OrderDetailsModal = ({ show, handleClose, orderDetails, productDetails, addressData }) => {
+  if (!orderDetails || !productDetails || !addressData) {
+    // Display a loading spinner while waiting for data
+    return (
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Loading...</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <Spinner animation="border" variant="primary" />
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
+  // Once data is available, display the modal with the content
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header>
+        <Modal.Title>Order Details</Modal.Title>
+      </Modal.Header>
+      <Modal.Body style={{backgroundColor: 'lightgray'}}>
+        <strong>Customer ID:</strong> {orderDetails.customer_id}<br />
+        <strong>Quantity:</strong> {orderDetails.quantity}<br />
+        <strong>Product Name:</strong> {productDetails.name}<br />
+        <strong>Price:</strong> {productDetails.price}<br />
+        <strong>Total Price:</strong> {orderDetails.quantity * productDetails.price}<br />
+        <p>
+      <strong>Address Type:</strong> {addressData.address_type}<br />
+      <strong>Street:</strong> {addressData.street}<br />
+      <strong>City:</strong> {addressData.city}<br />
+      <strong>State:</strong> {addressData.state}<br />
+      <strong>Zip Code:</strong> {addressData.zip_code}<br />
+      <strong>Contact Number:</strong> {addressData.contact_number}<br />
+    </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="danger" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
 const AllOrders = () => {
   const [orders, setOrders] = useState([]);
   const [searchDate, setSearchDate] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [productDetails, setProductDetails] = useState(null);
+  const [address, setAddress] = useState(null);
 
   useEffect(() => {
     // Fetch data from your API
@@ -13,11 +64,30 @@ const AllOrders = () => {
       .then(response => response.json())
       .then(data => setOrders(data))
       .catch(error => console.error('Error fetching data:', error));
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []);
 
-  const handleViewDetails = (orderId) => {
-    // Implement logic for viewing order details
-    console.log(`View details for Order ID: ${orderId}`);
+  const handleViewDetails = (order) => {
+    setSelectedOrder(order);
+    setOrderDetails(null);
+    setProductDetails(null);
+
+    // Fetch order details from the API
+    fetch(`https://fst-cart-production.up.railway.app/api/ordered-items/1`)
+      .then(response => response.json())
+      .then(data => setOrderDetails(data))
+      .catch(error => console.error('Error fetching order details:', error));
+
+    // Fetch product details from the API
+    fetch(`https://fst-cart-production.up.railway.app/api/products/1`)
+      .then(response => response.json())
+      .then(data => setProductDetails(data))
+      .catch(error => console.error('Error fetching product details:', error));
+
+            // Fetch product details from the API
+            fetch(`https://fst-cart-production.up.railway.app/api/addresses/2`)
+            .then(response => response.json())
+            .then(data => setAddress(data))
+            .catch(error => console.error('Error fetching product details:', error));
   };
 
   const handleDeleteOrder = (orderId) => {
@@ -37,7 +107,7 @@ const AllOrders = () => {
       const searchDateFormatted = searchDate ? searchDate.toISOString().split('T')[0] : null;
       return searchDateFormatted ? orderDate === searchDateFormatted : true;
     });
-  
+
     // Update the orders state with the filtered orders
     setOrders(filteredOrders);
   };
@@ -69,14 +139,26 @@ const AllOrders = () => {
             </div>
 
             <div className="order-actions">
-              <button onClick={() => handleViewDetails(order.order_id)}>View Details</button>
-              <button onClick={() => handleDeleteOrder(order.order_id)}>Delete Order</button>
+              <button onClick={() => handleViewDetails(order)}>View Details</button>
+              <button onClick={() => handleDeleteOrder(order.order_id)}>
+                <Trash size={20} />
+              </button>
             </div>
 
             <hr />
           </div>
         ))}
       </div>
+
+      {selectedOrder && (
+        <OrderDetailsModal
+          show={!!orderDetails && !!productDetails}
+          handleClose={() => setSelectedOrder(null)}
+          orderDetails={orderDetails}
+          productDetails={productDetails}
+          addressData={address}
+        />
+      )}
     </div>
   );
 };
