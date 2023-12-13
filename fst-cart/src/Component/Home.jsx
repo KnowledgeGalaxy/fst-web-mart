@@ -119,9 +119,9 @@ const Home = () => {
       </div>
       <div className="product-list">
         {filteredProducts.map(product => (
-          <div key={product.id} className="product-card" onClick={() => handleProductClick(product)}>
+          <div key={product.id} className="product-card" >
             <div className="card">
-              <img src={product.imageUrl} alt={product.name} className='img' />
+              <img src={product.imageUrl} alt={product.name} className='img'  onClick={() => handleProductClick(product)}/>
               <h3>{product.name}</h3>
               <p>Price: ₹{product.price}</p>
               <p>Category: {getCategoryNameById(product.category)}</p>

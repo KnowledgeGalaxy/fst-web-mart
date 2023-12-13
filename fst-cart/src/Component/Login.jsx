@@ -29,8 +29,6 @@ const Login = () => {
         const data = await response.json();
         dispatch(setLoggedIn(true));
         dispatch(setLoginDataStore(data.customer_id));
-        localStorage.setItem('customerId' ,data.customer_id)
-        localStorage.setItem('isLoggedIn', 'true');
         navigate('/cart');
       } else {
         alert('Login failed. Please check your credentials.');

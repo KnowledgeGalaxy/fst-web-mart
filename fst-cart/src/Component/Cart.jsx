@@ -28,7 +28,7 @@ const Cart = () => {
 
   const handlePlaceOrder = async () => {
     // Check if the user is logged in
-    if (!isLoggedIn && !storedLoggedInState) {
+    if (!isLoggedIn ) {
       // If not logged in, redirect to the login page
       navigate('/login');
       return;
