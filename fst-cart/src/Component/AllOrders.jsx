@@ -93,6 +93,26 @@ const AllOrders = () => {
   const handleDeleteOrder = (orderId) => {
     // Implement logic for deleting order
     console.log(`Delete Order ID: ${orderId}`);
+  
+    // Send a DELETE request to the API
+    fetch(`https://fst-cart-production.up.railway.app/api/confirm-orders/${orderId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add any additional headers if needed
+      },
+    })
+      .then(response => {
+        if (response.ok) {
+          alert(`Order ID ${orderId} deleted successfully.`);
+          // Implement any additional logic after successful deletion
+        } else {
+          alert(`Failed to delete Order ID ${orderId}.`);
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting order:', error);
+      });
   };
 
   const formatDate = (dateString) => {
@@ -130,7 +150,7 @@ const AllOrders = () => {
         {orders.map(order => (
           <div className="order-card" key={order.id}>
             <div className="order-details">
-              <strong>Order ID:</strong> {order.order_id}<br />
+              <strong>Order ID:</strong> {order.id}<br />
               <strong>Customer ID:</strong> {order.customer_id}<br />
               <strong>Address:</strong> {order.address}<br />
               <strong>Contact Number:</strong> {order.contact_number}<br />
@@ -140,7 +160,7 @@ const AllOrders = () => {
 
             <div className="order-actions">
               <button onClick={() => handleViewDetails(order)}>View Details</button>
-              <button onClick={() => handleDeleteOrder(order.order_id)}>
+              <button onClick={() => handleDeleteOrder(order.id)}>
                 <Trash size={20} />
               </button>
             </div>
