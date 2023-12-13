@@ -14,6 +14,9 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [feedback, setFeedback] = useState('');
+
+ 
 
   useEffect(() => {
     // Fetch products
@@ -79,7 +82,22 @@ const Home = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === '' || String(product.category) === selectedCategory)
   ));
+  const handleFeedbackChange = (e) => {
+    setFeedback(e.target.value);
+  };
 
+  const handleSubmitFeedback = () => {
+    // Handle the feedback submission, e.g., send it to a server
+    console.log('Feedback submitted:', feedback);
+    // Close the modal after submitting feedback
+    closeModal();
+  };
+  const whatsappNumber = '7810888468'; // Replace with the actual WhatsApp number
+
+  const openWhatsApp = () => {
+    const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+    window.open(whatsappUrl, '_blank');
+  };
   return (
     <div className="home">
       <div className="search-bar">
@@ -123,26 +141,81 @@ const Home = () => {
   contentLabel="Product Modal"
   className="modal"
   overlayClassName="overlay"
+  style={{
+    content: {
+      maxWidth: '600px',
+      margin: 'auto',
+      borderRadius: '8px',
+      padding: '20px',
+    },
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+  }}
 >
   <div className="product-description">
-    <h2>{selectedProduct && selectedProduct.name}</h2>
-    <p>Description: {selectedProduct && selectedProduct.description}</p>
+    <h2 style={{ marginBottom: '10px' }}>{selectedProduct && selectedProduct.name}</h2>
+    <p style={{ marginBottom: '20px' }}>Description: {selectedProduct && selectedProduct.description}</p>
     {/* Add more details, reviews, comments, and contact details as needed */}
-    <div className="reviews">
+    <div className="reviews" style={{ marginBottom: '20px' }}>
       <h3>Reviews:</h3>
       <p>Great product! ⭐⭐⭐⭐⭐</p>
       <p>Awesome quality. ⭐⭐⭐⭐</p>
     </div>
-    <div className="contact">
+    <div className="contact" style={{ marginBottom: '20px' }}>
       <h3>Contact:</h3>
       <p>
-        <span role="img" aria-label="mail">📧</span> Email: {selectedProduct && 'fstmart@gmail.com'}
-      </p>
-      <p>
-        <span role="img" aria-label="whatsapp">📱</span> WhatsApp: {selectedProduct && '7810888468'}
+        <span
+          role="img"
+          aria-label="whatsapp"
+          style={{ cursor: 'pointer' }}
+          onClick={openWhatsApp}
+        >
+          📱
+        </span>{' '}
+        WhatsApp: {selectedProduct && '7810888468'}
       </p>
     </div>
-    <button onClick={closeModal}>Close</button>
+    <div className="feedback" style={{ marginBottom: '20px' }}>
+      <h3>Give Feedback:</h3>
+      <textarea
+        value={feedback}
+        onChange={handleFeedbackChange}
+        placeholder="Type your feedback here..."
+        style={{
+          width: '100%',
+          padding: '10px',
+          marginBottom: '10px',
+          borderRadius: '4px',
+        }}
+      />
+      <button
+        onClick={handleSubmitFeedback}
+        style={{
+          padding: '10px',
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Submit Feedback
+      </button>
+    </div>
+    <button
+      onClick={closeModal}
+      style={{
+        padding: '10px',
+        backgroundColor: '#d9534f',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+      }}
+    >
+      Close
+    </button>
   </div>
 </Modal>
     </div>
