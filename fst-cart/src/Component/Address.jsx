@@ -24,12 +24,13 @@ const Address = () => {
   const [loading, setLoading] = useState(true);
 
   const loginData = useSelector((state) => state.auth.loginData);
+  const customerId= loginData ? loginData: localStorage.getItem('customerId');
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await fetch(`https://fst-cart-production.up.railway.app/api/customers/${loginData}/addresses/`);
+        const response = await fetch(`https://fst-cart-production.up.railway.app/api/customers/${customerId}/addresses/`);
 
         if (response.ok) {
           const data = await response.json();
@@ -60,9 +61,6 @@ const Address = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const customerId = loginData; // Replace with the actual customer ID
-
     if (!selectedAddress) {
       // User submitted a new address, handle the submission logic as before
       const requestOptions = {

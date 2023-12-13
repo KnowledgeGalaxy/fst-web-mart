@@ -11,7 +11,8 @@ import { setOrderData } from '../actions/orderActions';
 const Cart = () => {
   const cart = useSelector((state) => state.cart.cart);
   const customerID = useSelector((state) => state.auth.loginData);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Assuming you have isLoggedIn in your Redux state
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const storedLoggedInState = localStorage.getItem('isLoggedIn');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,7 +28,7 @@ const Cart = () => {
 
   const handlePlaceOrder = async () => {
     // Check if the user is logged in
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !storedLoggedInState) {
       // If not logged in, redirect to the login page
       navigate('/login');
       return;
