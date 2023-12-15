@@ -11,12 +11,17 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleCartClick = () => {
-    navigate('/cart');
+    if (cart.length > 0) {
+      navigate('/cart');
+    }
   };
 
+  const naviGateHome=()=>{
+    navigate('/')
+  }
   return (
     <div className="header">
-      <div className="title">FSTMART.IN</div>
+      <div className="title" onClick={naviGateHome}>FSTMART.IN</div>
       <div className="cart-icon" onClick={handleCartClick}>
         <FontAwesomeIcon icon={faShoppingCart} />
         {cart.length > 0 && (
