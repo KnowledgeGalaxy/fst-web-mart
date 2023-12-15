@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="title">FSTMART.COM</div>
+      <div className="title">FSTMART.IN</div>
       <div className="cart-icon" onClick={handleCartClick}>
         <FontAwesomeIcon icon={faShoppingCart} />
         {cart.length > 0 && (
