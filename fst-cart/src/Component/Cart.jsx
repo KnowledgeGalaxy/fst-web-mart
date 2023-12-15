@@ -12,7 +12,6 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart.cart);
   const customerID = useSelector((state) => state.auth.loginData);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const storedLoggedInState = localStorage.getItem('isLoggedIn');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
