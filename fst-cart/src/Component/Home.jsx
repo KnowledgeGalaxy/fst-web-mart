@@ -15,6 +15,7 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [productsFeedback, setProductFeedback]=useState([]);
 
  
 
@@ -37,6 +38,27 @@ const Home = () => {
         console.error('Error fetching categories:', error);
       });
   }, []);
+
+  useEffect(() => {
+    const fetchProductFeedback = async () => {
+      if (selectedProduct) {
+        try {
+          const response = await fetch(`https://fst-cart-production.up.railway.app/api/product-feedback/${selectedProduct.id}/`);
+          
+          if (response.ok) {
+            const data = await response.json();
+            setProductFeedback(data);
+          } else {
+            console.error('Failed to fetch product feedback');
+          }
+        } catch (error) {
+          console.error('Error during fetch:', error);
+        }
+      }
+    };
+
+    fetchProductFeedback();
+  }, [selectedProduct]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -158,10 +180,12 @@ const Home = () => {
     <p style={{ marginBottom: '20px' }}>Description: {selectedProduct && selectedProduct.description}</p>
     {/* Add more details, reviews, comments, and contact details as needed */}
     <div className="reviews" style={{ marginBottom: '20px' }}>
-      <h3>Reviews:</h3>
-      <p>Great product! ⭐⭐⭐⭐⭐</p>
-      <p>Awesome quality. ⭐⭐⭐⭐</p>
-    </div>
+            <h3>Reviews:</h3>
+            {/* Display product feedback (reviews) */}
+            {productsFeedback.map((feedback) => (
+              <p key={feedback.id}>{feedback.feedback_text} ⭐{feedback.rating}</p>
+            ))}
+          </div>
     <div className="contact" style={{ marginBottom: '20px' }}>
       <h3>Contact:</h3>
       <p>

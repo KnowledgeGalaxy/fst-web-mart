@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../css/Header.css';
+import Nav from './Nav';
 
 const Header = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -20,6 +21,7 @@ const Header = () => {
     navigate('/')
   }
   return (
+    <>
     <div className="header">
       <div className="title" onClick={naviGateHome}>FSTMART.IN</div>
       <div className="cart-icon" onClick={handleCartClick}>
@@ -29,6 +31,8 @@ const Header = () => {
         )}
       </div>
     </div>
+    <Nav/>
+    </>
   );
 };
 

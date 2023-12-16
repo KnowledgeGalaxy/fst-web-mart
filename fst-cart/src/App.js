@@ -12,11 +12,14 @@ import Header from './Component/Header';
 import Category from './Component/Category';
 import Login from './Component/Login';
 import Address from './Component/Address';
+import Contact from './Component/Contact';
+import MyProfile from './Component/MyProfile'
 
 // Import the new components
 import OrderDetails from './Component/OrderDetails';
 import ConfirmOrder from './Component/ConfirmOrder';
 import ThankYou from './Component/ThankYou';
+import About from './Component/About'
 
 const App = () => {
   return (
@@ -33,7 +36,9 @@ const App = () => {
           <Route path="/admin/category" element={<Category />} />
           <Route path="/login" element={<Login />} />
           <Route path="/address" element={<Address />} />
-
+          <Route path="/about-us" element={<About />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/myprofile" element={<MyProfile />} />
           {/* Add the paths for the new components */}
           <Route path="/order-details" element={<OrderDetails />} />
           <Route path="/confirm-order" element={<ConfirmOrder />} />

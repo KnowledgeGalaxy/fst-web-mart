@@ -79,6 +79,7 @@ const Login = () => {
         if (response.ok) {
           const data = await response.json();
           dispatch(setLoggedIn(true));
+          localStorage.setItem('isLoggedin', true);
           dispatch(setLoginDataStore(data.customer_id));
           navigate('/cart');
         } else {
