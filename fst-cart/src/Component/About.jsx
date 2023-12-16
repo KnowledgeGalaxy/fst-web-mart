@@ -90,8 +90,13 @@ const About = () => {
     <div className="about">
       <h2>About Us</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec dolor vel quam tincidunt
-        facilisis at ut ligula. Nulla facilisi.
+       "Building and Painting, Simplified."
+ "Quality Supplies, Endless Possibilities.
+ "Creating with Confidence."
+ "Your Building and Painting Partner."
+ "Turning Ideas into Reality."
+ "FSTMART: Your Creative Catalyst."
+ "Bringing Vision to Vibrant Life."
       </p>
       <h3>Website Feedback</h3>
       {renderStarRating(calculateOverallRating())}
