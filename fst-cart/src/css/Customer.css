@@ -1,0 +1,20 @@
+.customer-container {
+    margin: 20px;
+  }
+  
+  .customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .customer-table th, .customer-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .customer-table th {
+    background-color: #f2f2f2;
+  }
+  

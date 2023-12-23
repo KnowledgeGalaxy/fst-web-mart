@@ -54,6 +54,9 @@ const Admin = () => {
               <li>
                 <Link to="/admin/category">Add Categories</Link>
               </li>
+              <li>
+                <Link to="/customers">All Customers</Link>
+              </li>
             </ul>
           </nav>
         </div>

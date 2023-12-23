@@ -20,6 +20,7 @@ import OrderDetails from './Component/OrderDetails';
 import ConfirmOrder from './Component/ConfirmOrder';
 import ThankYou from './Component/ThankYou';
 import About from './Component/About'
+import Customer from './Component/Customer'
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/order-details" element={<OrderDetails />} />
           <Route path="/confirm-order" element={<ConfirmOrder />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/customers" element={<Customer />} />
         </Routes>
       </div>
     </Router>
