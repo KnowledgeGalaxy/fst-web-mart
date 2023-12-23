@@ -1,7 +1,8 @@
+// About.jsx
 import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import axios from 'axios';
-// import '../css/About.css'; // Import your CSS file
+import '../css/About.css';
 
 const About = () => {
   const [feedback, setFeedback] = useState('');
@@ -9,7 +10,6 @@ const About = () => {
   const [websiteFeedback, setWebsiteFeedback] = useState([]);
 
   useEffect(() => {
-    // Fetch all website feedback on component mount
     const fetchWebsiteFeedback = async () => {
       try {
         const response = await axios.get('https://fst-cart-production.up.railway.app/api/website-feedback/');
@@ -42,10 +42,9 @@ const About = () => {
       });
 
       if (response.status === 201) {
-        // Update the list with the new feedback
         setWebsiteFeedback([...websiteFeedback, response.data]);
         setFeedback('');
-        setUserRating(0); // Reset user rating after submission
+        setUserRating(0);
       } else {
         alert('Failed to submit feedback. Please try again.');
       }
@@ -55,7 +54,6 @@ const About = () => {
     }
   };
 
-  // Calculate overall rating
   const calculateOverallRating = () => {
     if (websiteFeedback.length === 0) {
       return 0;
@@ -68,7 +66,7 @@ const About = () => {
   };
 
   const renderStarRating = (rating) => {
-    const roundedRating = Math.round(rating * 2) / 2; // Round to nearest 0.5
+    const roundedRating = Math.round(rating * 2) / 2;
     const starsArray = Array.from({ length: 5 }, (_, index) => (
       <FaStar
         key={index}
@@ -79,9 +77,9 @@ const About = () => {
     ));
 
     return (
-      <div>
+      <div className="star-rating">
         {starsArray}
-        <span style={{ marginLeft: '0.5rem' }}>{roundedRating.toFixed(2)} out of 5</span>
+        <span className="rating-text">{roundedRating.toFixed(2)} out of 5</span>
       </div>
     );
   };
@@ -89,19 +87,18 @@ const About = () => {
   return (
     <div className="about">
       <h2>About Us</h2>
-      <p>
-       "Building and Painting, Simplified."
- "Quality Supplies, Endless Possibilities.
- "Creating with Confidence."
- "Your Building and Painting Partner."
- "Turning Ideas into Reality."
- "FSTMART: Your Creative Catalyst."
- "Bringing Vision to Vibrant Life."
+      <p>Welcome to <a href='www.fstmart.in'>FST MART </a> We're your premier destination for top-quality construction essentials - building materials, hardware, water solutions, pump motors, and paints. Our focus? Your project success.<br/>
+
+      <br/><b>*Products & Services:*</b> <br/>
+Explore our range of high-grade products and reliable services tailored to your needs. From cement to vibrant paints, and expert guidance, we've got your construction needs covered.<br/>
+
+<br/><b>*Customer Feedback:*</b><br/>
+Our customers love us! Check out their testimonials praising our quality, reliability, and exceptional service. Join our satisfied clientele today!<br/>
       </p>
       <h3>Website Feedback</h3>
       {renderStarRating(calculateOverallRating())}
       {websiteFeedback.length > 0 ? (
-        <ul>
+        <ul className="feedback-list">
           {websiteFeedback.map((feedbackItem) => (
             <li key={feedbackItem.id}>{feedbackItem.feedback_text}</li>
           ))}
@@ -109,7 +106,7 @@ const About = () => {
       ) : (
         <p>No website feedback available.</p>
       )}
-      <div>
+      <div className="user-rating">
         <span>Give Your Rating: </span>
         {Array.from({ length: 5 }, (_, index) => (
           <FaStar
@@ -134,4 +131,3 @@ const About = () => {
 };
 
 export default About;
- 
