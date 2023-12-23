@@ -1,31 +1,49 @@
 // Contact.jsx
 import React from 'react';
-//import '../css/Contact.css'; // Import your CSS file
 
 const Contact = () => {
   const openWhatsApp = () => {
-    // Implement the logic to open WhatsApp link
-     window.open('https://wa.me/7810888468', '_blank');
-    alert('Open WhatsApp link here'); // Replace this with the actual logic
+    window.open('https://wa.me/7810888468', '_blank');
+  };
+
+  const sendEmail = (email) => {
+    window.open(`mailto:${email}`);
   };
 
   return (
-    <div className="contact">
+    <div className="contact" style={{ textAlign: 'center', padding: '20px' }}>
       <h2>Contact Us</h2>
-      <div className="contact-details">
+      <h2>7810888468</h2>
+      <div className="contact-details" style={{ marginTop: '15px' }}>
         <h3>WhatsApp:</h3>
-        <p>
-          <span
-            role="img"
-            aria-label="whatsapp"
-            style={{ cursor: 'pointer' }}
-            onClick={openWhatsApp}
-          >
-            📱
-          </span>{' '}
-          WhatsApp: 7810888468 {/* Replace with the actual WhatsApp number */}
-        </p>
-        {/* Add more contact details as needed */}
+        <button
+          onClick={openWhatsApp}
+          style={{
+            backgroundColor: '#25d366',
+            color: '#fff',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          Chat on WhatsApp
+        </button>
+        <h3>Email:</h3>
+        <h3>fastmart69@gmail.com</h3>
+        <button
+          onClick={() => sendEmail('fastmart69@gmail.com')}
+          style={{
+            backgroundColor: '#007bff',
+            color: '#fff',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          Send Email
+        </button>
       </div>
     </div>
   );
