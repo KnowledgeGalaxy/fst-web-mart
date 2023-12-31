@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
 import axios from 'axios';
+import { FaStar } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
 import '../css/Home.css';
 
 const Home = () => {
@@ -16,8 +18,12 @@ const Home = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [productsFeedback, setProductFeedback]=useState([]);
-
- 
+  const [userRating, setUserRating] = useState(0);
+  const [websiteFeedback, setWebsiteFeedback] = useState([]);
+  const [customerNames, setCustomerNames] = useState({});
+  const isLoggedIn = localStorage.getItem('isLoggedin');
+  const customerId = localStorage.getItem('customerId');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch products
@@ -47,6 +53,7 @@ const Home = () => {
           
           if (response.ok) {
             const data = await response.json();
+            setWebsiteFeedback(data);
             setProductFeedback(data);
           } else {
             console.error('Failed to fetch product feedback');
@@ -60,6 +67,21 @@ const Home = () => {
     fetchProductFeedback();
   }, [selectedProduct]);
 
+  useEffect(() => {
+    const fetchCustomerNames = async () => {
+      const names = {};
+      for (const feedbackItem of websiteFeedback) {
+        if (!names[feedbackItem.customer_id]) {
+          const name = await getCustomerName(feedbackItem.customer_id);
+          names[feedbackItem.customer_id] = name;
+        }
+      }
+      setCustomerNames(names);
+    };
+
+    fetchCustomerNames();
+  }, [websiteFeedback]);
+
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -71,6 +93,22 @@ const Home = () => {
   const handleProductClick = (product) => {
     setSelectedProduct(product);
     openModal();
+  };
+  const getCustomerName = async (customerId) => {
+    let name = 'Unknown';
+    try {
+      const response = await axios.get(`https://fst-cart-production.up.railway.app/api/customers/${customerId}`);
+
+      if (response.status === 200) {
+        name = response.data.name;
+      } else {
+        console.log('Failed to get customer name. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error getting customer name:', error);
+      console.log('An error occurred while getting customer name. Please try again.');
+    }
+    return name;
   };
 
   const handleAddToCart = (product) => {
@@ -108,17 +146,99 @@ const Home = () => {
     setFeedback(e.target.value);
   };
 
-  const handleSubmitFeedback = () => {
-    // Handle the feedback submission, e.g., send it to a server
-    console.log('Feedback submitted:', feedback);
-    // Close the modal after submitting feedback
-    closeModal();
+  const handleSubmitFeedback = async () => {
+    if (isLoggedIn) {
+      try {
+        const response = await axios.post(`https://fst-cart-production.up.railway.app/api/product-feedback/${selectedProduct.id}/`, {
+          feedback_text: feedback,
+          product_id: selectedProduct.id,
+          rating: userRating,
+          customer_id: customerId,
+        });
+
+        if (response.status === 201) {
+          setWebsiteFeedback([...websiteFeedback, response.data]);
+          setFeedback('');
+          setUserRating(0);
+        } else {
+          alert('Failed to submit feedback. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error submitting feedback:', error);
+        alert('An error occurred while submitting feedback. Please try again.');
+      }
+    } else {
+      alert('Please login to give your valuable feedback');
+      navigate('/login');
+    }
   };
   const whatsappNumber = '7810888468'; // Replace with the actual WhatsApp number
 
   const openWhatsApp = () => {
     const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     window.open(whatsappUrl, '_blank');
+  };
+
+  const renderFeedbackList = () => {
+    return websiteFeedback.length > 0 ? (
+      <ul className="feedback-list">
+      {websiteFeedback.map((feedbackItem, index) => (
+        <React.Fragment key={index}>
+          {feedbackItem.feedback_text && (
+            <>
+              <h4 style={{ color: 'green', textDecoration: 'underline' }}>
+                {customerNames[feedbackItem.customer_id]}{' '}
+                {feedbackItem.created_at &&
+                  new Date(feedbackItem.created_at).toLocaleString('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                  })}
+              </h4>
+              <li>{feedbackItem.feedback_text}</li>
+            </>
+          )}
+        </React.Fragment>
+      ))}
+    </ul>
+    ) : (
+      <p>No website feedback available.</p>
+    );
+  };
+
+  const calculateOverallRating = () => {
+    if (websiteFeedback.length === 0) {
+      return 0;
+    }
+
+    const totalRating = websiteFeedback.reduce((acc, feedbackItem) => acc + feedbackItem.rating, 0);
+    const averageRating = totalRating / websiteFeedback.length;
+
+    return averageRating;
+  };
+
+  const handleStarClick = (rating) => {
+    setUserRating(rating);
+  };
+  const renderStarRating = (rating) => {
+    const roundedRating = Math.round(rating * 2) / 2;
+    const starsArray = Array.from({ length: 5 }, (_, index) => (
+      <FaStar
+        key={index}
+        color={index + 1 <= roundedRating ? '#ffc107' : '#e4e5e9'}
+        onClick={() => handleStarClick(index + 1)}
+        style={{ cursor: 'pointer' }}
+      />
+    ));
+
+    return (
+      <div className="star-rating">
+        {starsArray}
+        <span className="rating-text">{roundedRating.toFixed(2)} out of 5</span>
+      </div>
+    );
   };
   return (
     <div className="home">
@@ -201,7 +321,20 @@ const Home = () => {
       </p>
     </div>
     <div className="feedback" style={{ marginBottom: '20px' }}>
+      <div>{renderStarRating(calculateOverallRating())}</div>
+      <div>{renderFeedbackList()}</div>
       <h3>Give Feedback:</h3>
+      <div className="user-rating">
+        <span>Give Your Rating: </span>
+        {Array.from({ length: 5 }, (_, index) => (
+          <FaStar
+            key={index}
+            color={index + 1 <= userRating ? '#ffc107' : '#e4e5e9'}
+            onClick={() => handleStarClick(index + 1)}
+            style={{ cursor: 'pointer', fontSize: '24px', marginRight: '5px' }}
+          />
+        ))}
+      </div>
       <textarea
         value={feedback}
         onChange={handleFeedbackChange}
