@@ -204,7 +204,7 @@ const Home = () => {
       ))}
     </ul>
     ) : (
-      <p>No website feedback available.</p>
+      <p>No  feedback available for this product .</p>
     );
   };
 
@@ -283,29 +283,18 @@ const Home = () => {
   contentLabel="Product Modal"
   className="modal"
   overlayClassName="overlay"
-  style={{
-    content: {
-      maxWidth: '600px',
-      margin: 'auto',
-      borderRadius: '8px',
-      padding: '20px',
-    },
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-  }}
 >
   <div className="product-description">
     <h2 style={{ marginBottom: '10px' }}>{selectedProduct && selectedProduct.name}</h2>
     <p style={{ marginBottom: '20px' }}>Description: {selectedProduct && selectedProduct.description}</p>
-    {/* Add more details, reviews, comments, and contact details as needed */}
+    
     <div className="reviews" style={{ marginBottom: '20px' }}>
-            <h3>Reviews:</h3>
-            {/* Display product feedback (reviews) */}
-            {productsFeedback.map((feedback) => (
-              <p key={feedback.id}>{feedback.feedback_text} ⭐{feedback.rating}</p>
-            ))}
-          </div>
+      <h3>Reviews:</h3>
+      {productsFeedback.map((feedback) => (
+        <p key={feedback.id}>{feedback.feedback_text} ⭐{feedback.rating}</p>
+      ))}
+    </div>
+    
     <div className="contact" style={{ marginBottom: '20px' }}>
       <h3>Contact:</h3>
       <p>
@@ -320,6 +309,7 @@ const Home = () => {
         WhatsApp: {selectedProduct && '7810888468'}
       </p>
     </div>
+
     <div className="feedback" style={{ marginBottom: '20px' }}>
       <div>{renderStarRating(calculateOverallRating())}</div>
       <div>{renderFeedbackList()}</div>
@@ -340,10 +330,11 @@ const Home = () => {
         onChange={handleFeedbackChange}
         placeholder="Type your feedback here..."
         style={{
-          width: '100%',
+          width: '90%',
           padding: '10px',
           marginBottom: '10px',
           borderRadius: '4px',
+          marginRight :'40px'
         }}
       />
       <button
@@ -360,6 +351,7 @@ const Home = () => {
         Submit Feedback
       </button>
     </div>
+
     <button
       onClick={closeModal}
       style={{
@@ -375,6 +367,7 @@ const Home = () => {
     </button>
   </div>
 </Modal>
+
     </div>
   );
 };
